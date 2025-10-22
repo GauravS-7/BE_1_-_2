@@ -1,0 +1,132 @@
+const { initializeDatabase } = require("./db/db.connect");
+
+const Movie = require("./models/movie.models");
+const { json } = require("stream/consumers");
+const { title } = require("process");
+const { release } = require("os");
+const { mongo, Mongoose } = require("mongoose");
+const { log } = require("console");
+const { AsyncLocalStorage } = require("async_hooks");
+initializeDatabase();
+
+const newMovie = {
+  title: "New Movie",
+  releaseYear: 2023,
+  genre: ["Drama"],
+  director: "Aditya Roy Chopra",
+  actors: ["Actor1", "Actor2"],
+  language: "Hindi",
+  country: "India",
+  rating: 6.1,
+  plot: "A young man and woman fall in love on a Australia trip.",
+  awards: "IFA Filmfare Awards",
+  posterUrl: "https://example.com/poster1.jpg",
+  trailerUrl: "https://example.com/trailer1.mp4",
+};
+
+// async function createMovie(newMovie) {
+//   try {
+//     const movie = new Movie(newMovie);
+//     const saveMovie = await movie.save();
+//     console.log(saveMovie);
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
+// createMovie(newMovie);
+// ! 2.2
+// Find a movie with a particular title
+
+// async function readMovieByTitle(movieTitle) {
+//   try {
+//     const movie = await Movie.findOne({ title: movieTitle });
+//     // console.log(movie);
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
+// readMovieByTitle("Lagaan");
+
+// to get all the movies in the data base
+
+// async function readAllMovies() {
+//   try {
+//     const allMovies = await Movie.find();
+//     // console.log(allMovies);
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+// readAllMovies();
+
+// // get movie by director name
+
+// async function getMovieByDirector(directorName) {
+//   try {
+//     const movieByDirector = await Movie.findOne({ director: directorName });
+//     console.log(movieByDirector);
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+// getMovieByDirector("Kabir Khan");
+
+// ! 2.3
+// find movie by id and update  its rating.
+
+// async function updateMovie(movieId, dataToUpdate) {
+//   try {
+//     const updatedMovie = await Movie.findByIdAndUpdate(movieId, dataToUpdate, {
+//       new: true,
+//     });
+//     console.log(updatedMovie);
+//   } catch (error) {
+//     console.log("Error updating movie rating", error);
+//   }
+// }
+
+// updateMovie("68f4d221d8f6c84a8672ce58", { releaseYear: 2002 });
+
+// find one data and updates its value
+
+// async function updateMovieDetail(movieTitle, dataToUpdate) {
+//   try {
+//     const updatedMovie = await Movie.findOneAndUpdate(
+//       { title: movieTitle },
+//       dataToUpdate,
+//       { new: true }
+//     );
+//     console.log(updatedMovie);
+//   } catch (error) {
+//     console.log("Error in changing data", error);
+//   }
+// }
+
+// updateMovieDetail("Kabhi Khushi Kabhie Gham", { releaseYear: 2001 });
+
+// ! 2.4
+//* Find a movie by id and delete from the database
+
+// async function deleteMovie(movieId) {
+//   try {
+//     const deleteMovie = await Movie.findByIdAndDelete(movieId);
+//     console.log("Movie Deleted Successfully.");
+//   } catch (error) {
+//     console.log("Error in deleting Movie ", error);
+//   }
+// }
+// deleteMovie("68f697e96ed8be019e77afca");
+
+// *
+async function deleteMovieFromDb(movieTitle) {
+  try {
+    const deletedMovie = await Movie.findOneAndDelete({ title: movieTitle });
+    console.log("This Movie was deleted", deletedMovie);
+  } catch (error) {
+    console.log("error in movie deletion", error);
+  }
+}
+
+deleteMovieFromDb("3 Idiots");

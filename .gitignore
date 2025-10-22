@@ -1,0 +1,12 @@
+# Ignore all .env files in all subfolders
+**/.env
+
+# Node modules
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
